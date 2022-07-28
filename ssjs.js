@@ -1,39 +1,48 @@
 <script runat="server">
-  Platform.Load('Core', '1.1')
+Platform.Load("core","1.1");  
+try{
+//Set Data Extension properties
+var fields1 = [
+      { "Name" : "SendID", "FieldType" : "Number"},
+      { "Name" : "SubscriberKey", "FieldType" : "Text", "MaxLength" : 50 },
+      { "Name" : "EventDate", "FieldType" : "Date", "Ordinal" : 2 },
+      { "Name" : "EventType", "FieldType" : "Text", "MaxLength" : 50 },
+      { "Name" : "TriggeredSendDefinitionObjectID", "FieldType" : "Text", "MaxLength" : 50 },
+      { "Name" : "BatchID", "FieldType" : "Number"},
+      { "Name" : "ClientID", "FieldType" : "Number"},
+      { "Name" : "ListID", "FieldType" : "Number"}
+    ]
+  
+var mytest1 = {
+    "CustomerKey" : "mytest1",
+    "Name" : "mytest1",
+    "Fields" : fields1
+ };
+//Set Data Extension properties
+var fields2 = [
+      { "Name" : "SendID", "FieldType" : "Number"},
+      { "Name" : "SubscriberKey", "FieldType" : "Text", "MaxLength" : 50 },
+      { "Name" : "EventDate", "FieldType" : "Date", "Ordinal" : 2 },
+      { "Name" : "EventType", "FieldType" : "Text", "MaxLength" : 50 },
+      { "Name" : "TriggeredSendDefinitionObjectID", "FieldType" : "Text", "MaxLength" : 50 },
+      { "Name" : "BatchID", "FieldType" : "Number"},
+      { "Name" : "ClientID", "FieldType" : "Number"},
+      { "Name" : "ListID", "FieldType" : "Number"}
+    ]
+  
+var mytest2 = {
+    "CustomerKey" : "mytest2",
+    "Name" : "mytest2",
+    "Fields" : fields2
+ };
+  
+//Create Data Extensions   
 
-  // Global Variables
-  // Change these variables according to your own settings
-  var userDetails = {
-           username : "sudiptanandan85",
-           token    : "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",
-           repoName : " Cloud-Pages,
-           fileName : "test.js"
-        }
-  // Do not change anything below this section
-  // get repo content
-  function getPrivateRepoContent(obj){
+var SentDE1 = DataExtension.Add(mytest1);
+var SentDE2 = DataExtension.Add(mytest2);
 
-      //Building the request URL = https://api.github.com/repos/marketingdeveloper/sfmc/contents/dev-1.html
-      var resource = 'https://api.github.com/repos/'+ obj.username + '/' + obj.repoName + '/contents/' + obj.fileName
-
-      var req = new Script.Util.HttpRequest(resource);
-          req.emptyContentHandling = 0;
-          req.retries = 2;
-          req.continueOnError = true;
-          req.contentType = "application/json; charset=utf-8"
-          req.setHeader("Authorization","token " + obj.token);
-          req.setHeader("User-Agent", obj.username + '/' + obj.repoName);
-          //  This header is very important! It allows to get the file content raw version. With that we can treat the the file as content like a charm :)
-          req.setHeader("Accept", "application/vnd.github.v3.raw");
-          req.setHeader("Cache-Control", "");
-          req.method = "GET";
-
-      var resp = req.send();
-
-      // Assigning the response content to a AMPScript variable
-      Platform.Variable.SetValue("@runCode", resp.content)
-  }
-
-  //Run the function passing the user settings as parameter
-  getPrivateRepoContent(userDetails)
+Platform.Response.Write("<br>De " + numItems + " Created<br>")
+}catch(e){
+  Write(Stringify(e));
+}
 </script>
